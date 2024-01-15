@@ -15,7 +15,11 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => [
+        'api/*',
+        'login',     // 追加
+        'logout',    // 追加
+        'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
@@ -29,6 +33,8 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    // CORSの設定 サブドメイン（LaravelとVueが完全に独立してそれぞれが違うURLを使用するとき）で実行するときは true を設定
+    // レスポンスヘッダの Access-Control-Allow-Credentials が true を返すようになります。
+    'supports_credentials' => true,
 
 ];
