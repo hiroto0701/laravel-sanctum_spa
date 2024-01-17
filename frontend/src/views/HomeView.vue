@@ -1,17 +1,25 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import axios from 'axios';
 
-const csrf = () => {
-  axios.get('/sanctum/csrf-cookie').then(response => {
-    console.log(response);
-  })
+const email = ref('');
+const password = ref('');
+ 
+const doLogin = () => {
+  axios.get('/sanctum/csrf-cookie').then(() => {
+    axios.post('/api/login', {
+      email: email.value,
+      password: password.value,
+    })
+  });
 }
+
 </script>
 
 <template>
   <main>
     <div>
-    <form @submit.prevent>
+    <form @submit.prevent="doLogin">
       <div>
         <label>Eメール</label>
         <input type="text" />
@@ -20,7 +28,7 @@ const csrf = () => {
         <label>パスワード</label>
         <input type="password" />
       </div>
-      <button @click="csrf" type="submit">ログイン</button>
+      <button type="submit">ログイン</button>
     </form>
   </div>
   </main>
